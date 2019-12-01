@@ -52,8 +52,6 @@ running = True
 while running:
     #RBG
     screen.fill((255, 255, 255))
-    slopeX = 0
-    slopeY = 0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -71,7 +69,7 @@ while running:
                 playerX_change = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 playerY_change = 0
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and bullet_state is "ready":
             slopeX, slopeY = pygame.mouse.get_pos()
             fire_bullet(playerX, bulletY)
 
@@ -89,20 +87,20 @@ while running:
         fire_spit1(spit1X, spit1Y)
         spit1Y += math.sin(angle) * SPEED
         spit1X += math.cos(angle) * SPEED
-        if spit1X > 1000 or spit1X < 0 or spit1Y > 800 or spit1X < 0:
+        if spit1X > 1000 or spit1X < 0 or spit1Y > 800 or spit1Y < 0:
             spit1_state = "ready"
 
     if bullet_state is "ready":
         bulletX = playerX
         bulletY = playerY
-        anglebullet = math.atan2((slopeY - playerY), (slopeX - playerX))
-        bullet.angle = math.degrees(anglebullet)
         SPEEDbullet = .3
     if bullet_state is "fire":
-        fire_bullet(playerX, playerY)
+        anglebullet = math.atan2((slopeY - playerY), (slopeX - playerX))
+        bullet.angle = math.degrees(anglebullet)
+        fire_bullet(bulletX, bulletY)
         bulletY += math.sin(anglebullet) * SPEEDbullet
         bulletX += math.cos(anglebullet) * SPEEDbullet
-        if bulletX > 1000 or bulletX < 0 or bulletY > 800 or bulletX < 0:
+    if bulletX > 1000 or bulletX < 0 or bulletY > 800 or bulletY < 0:
             bullet_state = "ready"
 
     enemy1(enemy1X, enemy1Y)
