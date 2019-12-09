@@ -8,25 +8,28 @@ enemy1hits = 0
 enemy2hits = 0
 playerhits = 0
 
-#pump1Img = pygame.image.load(r'C:\Users\Mmwwa\Downloads\pixel-100x100.png')
-#pump1X = 0
-#pump1Y = 0
+sunflower1Img = pygame.image.load(r'C:\Users\Mmwwa\Downloads\pixel-40x80.png')
+sunflower1X = 200
+sunflower1Y = 100
 
-#def pump1(x,y):
-   # screen.blit(pump1Img,(x, y))
+sunflower2X = 200
+sunflower2Y = 300
 
-fence1Img = pygame.image.load(r'C:\Users\Mmwwa\Downloads\pixel-100x100(1).png')
-fence1X = 130
-fence1Y = 340
+sunflower3X = 200
+sunflower3Y = 500
 
-fence2X = 540
-fence2Y = 340
+sunflower4X = 750
+sunflower4Y = 100
 
-fence3X = 640
-fence3Y = 340
+sunflower5X = 750
+sunflower5Y = 300
 
-def fence1(x,y):
-    screen.blit(fence1Img,(x, y))
+sunflower6X = 750
+sunflower6Y = 500
+
+def sunflower1(x,y):
+    screen.blit(sunflower1Img, (x, y))
+
 
 enemy1healthbar1Img = pygame.image.load(r'C:\Users\Mmwwa\Downloads\pixel-30x7.png')
 enemy1healthbar1Img = pygame.transform.scale(enemy1healthbar1Img, (50, 10))
@@ -54,8 +57,10 @@ def playerhealthbar2(x,y):
 
 enemy1Img = pygame.image.load(r'C:\Users\Mmwwa\Downloads\pixel-200x200.png')
 enemy1Img = pygame.transform.scale(enemy1Img, (100, 100))
-enemy1X = 500
+enemy1X = 840
 enemy1Y = 500
+enemy1Y_change = .1
+enemy1direction = 1
 
 def enemy1(x,y):
     screen.blit(enemy1Img, (x, y))
@@ -73,8 +78,10 @@ def fire_spit1(x,y):
     spit1_state = "fire"
     screen.blit(spit1Img, (x, y + 5))
 
-enemy2X = 170
-enemy2Y = 500
+enemy2X = 60
+enemy2Y = 80
+enemy2Y_change = .1
+enemy2direction = 0
 
 def enemy2(x,y):
     screen.blit(enemy1Img, (x, y))
@@ -93,8 +100,8 @@ def fire_spit2(x,y):
 
 playerImg = pygame.image.load(r'C:\Users\Mmwwa\Downloads\Girl 0.png')
 playerImg = pygame.transform.scale(playerImg, (100, 100))
-playerX = 150
-playerY = 150
+playerX = 450
+playerY = 300
 playerY_change = 0
 playerX_change = 0
 
@@ -156,6 +163,25 @@ while running:
     playerY += playerY_change
     playerX += playerX_change
 
+
+    if enemy2Y <= 80:
+        enemy2direction = 0
+    if enemy2Y >= 500:
+        enemy2direction = 1
+    if enemy2direction == 0:
+        enemy2Y += enemy2Y_change
+    if enemy2direction == 1:
+        enemy2Y -= enemy2Y_change
+
+    if enemy1Y <= 80:
+        enemy1direction = 0
+    if enemy1Y >= 500:
+        enemy1direction = 1
+    if enemy1direction == 0:
+        enemy1Y += enemy1Y_change
+    if enemy1direction == 1:
+        enemy1Y -= enemy1Y_change
+
     if enemy1hits < 2:
         if spit1_state is "ready":
             spit1X = enemy1X
@@ -173,14 +199,19 @@ while running:
             if playerX - 15 < spit1X < playerX + 40 and playerY - 30 < spit1Y < playerY + 75:
                 playerhits += 1
                 spit1_state = "ready"
-          #  if pump1X - 35 < spit1X < pump1X + 65 and pump1Y - 10 < spit1Y < pump1Y + 55:
-             #   spit1_state = "ready"
-            if fence1X - 43 < spit1X < fence1X + 75 and fence1Y < spit1Y < fence1Y + 80:
+            if sunflower1Y - 35 < spit1Y < sunflower1Y + 60 and sunflower1X - 39 < spit1X < sunflower1X + 20:
                 spit1_state = "ready"
-            if fence2X - 43 < spit1X < fence2X + 75 and fence2Y < spit1Y < fence2Y + 80:
+            if sunflower2Y - 35 < spit1Y < sunflower2Y + 60 and sunflower2X - 39 < spit1X < sunflower2X + 20:
                 spit1_state = "ready"
-            if fence3X - 43 < spit1X < fence3X + 75 and fence3Y < spit1Y < fence3Y + 80:
+            if sunflower3Y - 35 < spit1Y < sunflower3Y + 60 and sunflower3X - 39 < spit1X < sunflower3X + 20:
                 spit1_state = "ready"
+            if sunflower4Y - 35 < spit1Y < sunflower4Y + 60 and sunflower4X - 39 < spit1X < sunflower4X + 20:
+                spit1_state = "ready"
+            if sunflower5Y - 35 < spit1Y < sunflower5Y + 60 and sunflower5X - 39 < spit1X < sunflower5X + 20:
+                spit1_state = "ready"
+            if sunflower6Y - 35 < spit1Y < sunflower6Y + 60 and sunflower6X - 39 < spit1X < sunflower6X + 20:
+                spit1_state = "ready"
+
     if enemy1hits == 0:
         enemy1healthbar1(enemy1X + 23, enemy1Y + 100)
         enemy1(enemy1X, enemy1Y)
@@ -205,21 +236,25 @@ while running:
             if playerX - 15 < spit2X < playerX + 40 and playerY - 30 < spit2Y < playerY + 75:
                 playerhits += 1
                 spit2_state = "ready"
-        #    if pump1X - 35 < spit2X < pump1X + 65 and pump1Y - 10 < spit2Y < pump1Y + 55:
-             #   spit2_state = "ready"
-            if fence1X - 43 < spit2X < fence1X + 75 and fence1Y < spit2Y < fence1Y + 80:
+            if sunflower1Y - 35 < spit2Y < sunflower1Y + 60 and sunflower1X - 39 < spit2X < sunflower1X + 20:
                 spit2_state = "ready"
-            if fence2X - 43 < spit2X < fence2X + 75 and fence2Y < spit2Y < fence2Y + 80:
+            if sunflower2Y - 35 < spit2Y < sunflower2Y + 60 and sunflower2X - 39 < spit2X < sunflower2X + 20:
                 spit2_state = "ready"
-            if fence3X - 43 < spit2X < fence3X + 75 and fence3Y < spit2Y < fence3Y + 80:
+            if sunflower3Y - 35 < spit2Y < sunflower3Y + 60 and sunflower3X - 39 < spit2X < sunflower3X + 20:
                 spit2_state = "ready"
+            if sunflower4Y - 35 < spit2Y < sunflower4Y + 60 and sunflower4X - 39 < spit2X < sunflower4X + 20:
+                spit2_state = "ready"
+            if sunflower5Y - 35 < spit2Y < sunflower5Y + 60 and sunflower5X - 39 < spit2X < sunflower5X + 20:
+                spit2_state = "ready"
+            if sunflower6Y - 35 < spit2Y < sunflower6Y + 60 and sunflower6X - 39 < spit2X < sunflower6X + 20:
+                spit2_state = "ready"
+
     if enemy2hits == 0:
         enemy2healthbar1(enemy2X + 23, enemy2Y + 100)
         enemy2(enemy2X, enemy2Y)
     if enemy2hits == 1:
         enemy2healthbar2(enemy2X + 23, enemy2Y + 100)
         enemy2(enemy2X, enemy2Y)
-
 
     if bullet_state is "ready":
         bulletX = playerX
@@ -242,14 +277,72 @@ while running:
     if enemy2X - 5 < bulletX < enemy2X + 85 and enemy2Y + 16 < bulletY < enemy2Y + 71:
         enemy2hits = enemy2hits + 1
         bullet_state = "ready"
-   # if pump1X - 13 < bulletX < pump1X + 84 and pump1Y + 20 < bulletY < pump1Y + 75:
-      #  bullet_state = "ready"
-    if fence1X - 17 < bulletX < fence1X + 97 and fence1Y + 28 < bulletY < fence1Y + 98:
+    if sunflower1Y - 10 < bulletY < sunflower1Y + 77 and sunflower1X - 10 < bulletX < sunflower1X + 33:
         bullet_state = "ready"
-    if fence2X - 17 < bulletX < fence2X + 97 and fence2Y + 28 < bulletY < fence2Y + 98:
+    if sunflower2Y - 10 < bulletY < sunflower2Y + 77 and sunflower2X - 10 < bulletX < sunflower2X + 33:
         bullet_state = "ready"
-    if fence3X - 17 < bulletX < fence3X + 97 and fence3Y + 28 < bulletY < fence3Y + 98:
+    if sunflower3Y - 10 < bulletY < sunflower3Y + 77 and sunflower3X - 10 < bulletX < sunflower3X + 33:
         bullet_state = "ready"
+    if sunflower4Y - 10 < bulletY < sunflower4Y + 77 and sunflower4X - 10 < bulletX < sunflower4X + 33:
+        bullet_state = "ready"
+    if sunflower5Y - 10 < bulletY < sunflower5Y + 77 and sunflower5X - 10 < bulletX < sunflower5X + 33:
+        bullet_state = "ready"
+    if sunflower6Y - 10 < bulletY < sunflower6Y + 77 and sunflower6X - 10 < bulletX < sunflower6X + 33:
+        bullet_state = "ready"
+
+    if sunflower1X - 61 < playerX < sunflower1X - 55 and sunflower1Y - 90 < playerY < sunflower1Y + 72:
+        playerX = sunflower1X - 61
+    if sunflower1X + 5 < playerX < sunflower1X + 10 and sunflower1Y - 90 < playerY < sunflower1Y + 72:
+        playerX = sunflower1X + 10
+    if sunflower1Y - 90 < playerY < sunflower1Y - 85 and sunflower1X - 61 < playerX < sunflower1X + 10:
+        playerY = sunflower1Y - 90
+    if sunflower1Y + 65 < playerY < sunflower1Y + 72 and sunflower1X - 61 < playerX < sunflower1X + 10:
+        playerY = sunflower1Y + 72
+
+    if sunflower2X - 61 < playerX < sunflower2X - 55 and sunflower2Y - 90 < playerY < sunflower2Y + 72:
+        playerX = sunflower2X - 61
+    if sunflower2X + 5 < playerX < sunflower2X + 10 and sunflower2Y - 90 < playerY < sunflower2Y + 72:
+        playerX = sunflower2X + 10
+    if sunflower2Y - 90 < playerY < sunflower2Y - 85 and sunflower2X - 61 < playerX < sunflower2X + 10:
+        playerY = sunflower2Y - 90
+    if sunflower2Y + 65 < playerY < sunflower2Y + 72 and sunflower2X - 61 < playerX < sunflower2X + 10:
+        playerY = sunflower2Y + 72
+
+    if sunflower3X - 61 < playerX < sunflower3X - 55 and sunflower3Y - 90 < playerY < sunflower3Y + 72:
+        playerX = sunflower3X - 61
+    if sunflower3X + 5 < playerX < sunflower3X + 10 and sunflower3Y - 90 < playerY < sunflower3Y + 72:
+        playerX = sunflower3X + 10
+    if sunflower3Y - 90 < playerY < sunflower3Y - 85 and sunflower3X - 61 < playerX < sunflower3X + 10:
+        playerY = sunflower3Y - 90
+    if sunflower3Y + 65 < playerY < sunflower3Y + 72 and sunflower3X - 61 < playerX < sunflower3X + 10:
+        playerY = sunflower3Y + 72
+
+    if sunflower4X - 61 < playerX < sunflower4X - 55 and sunflower4Y - 90 < playerY < sunflower4Y + 72:
+        playerX = sunflower4X - 61
+    if sunflower4X + 5 < playerX < sunflower4X + 10 and sunflower4Y - 90 < playerY < sunflower4Y + 72:
+        playerX = sunflower4X + 10
+    if sunflower4Y - 90 < playerY < sunflower4Y - 85 and sunflower4X - 61 < playerX < sunflower4X + 10:
+        playerY = sunflower4Y - 90
+    if sunflower4Y + 65 < playerY < sunflower4Y + 72 and sunflower4X - 61 < playerX < sunflower4X + 10:
+        playerY = sunflower4Y + 72
+
+    if sunflower5X - 61 < playerX < sunflower5X - 55 and sunflower5Y - 90 < playerY < sunflower5Y + 72:
+        playerX = sunflower5X - 61
+    if sunflower5X + 5 < playerX < sunflower5X + 10 and sunflower5Y - 90 < playerY < sunflower5Y + 72:
+        playerX = sunflower5X + 10
+    if sunflower5Y - 90 < playerY < sunflower5Y - 85 and sunflower5X - 61 < playerX < sunflower5X + 10:
+        playerY = sunflower5Y - 90
+    if sunflower5Y + 65 < playerY < sunflower5Y + 72 and sunflower5X - 61 < playerX < sunflower5X + 10:
+        playerY = sunflower5Y + 72
+
+    if sunflower6X - 61 < playerX < sunflower6X - 55 and sunflower6Y - 90 < playerY < sunflower6Y + 72:
+        playerX = sunflower6X - 61
+    if sunflower6X + 5 < playerX < sunflower6X + 10 and sunflower6Y - 90 < playerY < sunflower6Y + 72:
+        playerX = sunflower6X + 10
+    if sunflower6Y - 90 < playerY < sunflower6Y - 85 and sunflower6X - 61 < playerX < sunflower6X + 10:
+        playerY = sunflower6Y - 90
+    if sunflower6Y + 65 < playerY < sunflower6Y + 72 and sunflower6X - 61 < playerX < sunflower6X + 10:
+        playerY = sunflower6Y + 72
 
     if enemy1X - 45 < playerX < enemy1X - 40 and enemy1Y - 75 < playerY < enemy1Y + 60:
         playerX = enemy1X - 45
@@ -269,45 +362,11 @@ while running:
     if enemy2Y - 55 < playerY < enemy2Y + 60 and enemy2X - 45 < playerX < enemy2X + 65:
         playerY = enemy2Y + 60
 
- #   if pump1X - 60 < playerX < pump1X - 55 and pump1Y - 65 < playerY < pump1Y + 65:
-     #   playerX = pump1X - 60
-  #  if pump1X + 55 < playerX < pump1X + 60 and pump1Y - 65 < playerY < pump1Y + 65:
-       # playerX = pump1X + 60
-   # if pump1Y - 65 < playerY < pump1Y - 60 and pump1X - 60 < playerX < pump1X + 60:
-       # playerY = pump1Y - 65
-  #  if pump1Y + 60 < playerY < pump1Y + 65 and pump1X - 60 < playerX < pump1X + 60:
-       # playerY = pump1Y + 65
-
-    if fence1X - 65 < playerX < fence1X - 60 and fence1Y -55 < playerY < fence1Y + 90:
-        playerX = fence1X - 65
-    if fence1X + 63 < playerX < fence1X + 68 and fence1Y -55 < playerY < fence1Y + 90:
-        playerX = fence1X + 68
-    if fence1Y - 55 < playerY < fence1Y - 50 and fence1X - 65 < playerX < fence1X + 68:
-        playerY = fence1Y - 55
-    if fence1Y + 85 < playerY < fence1Y + 90 and fence1X - 65 < playerX < fence1X + 68:
-        playerY = fence1Y + 90
-
-    if fence2X - 65 < playerX < fence2X - 60 and fence2Y -55 < playerY < fence2Y + 90:
-        playerX = fence2X - 65
-    if fence2X + 63 < playerX < fence2X + 68 and fence2Y -55 < playerY < fence2Y + 90:
-        playerX = fence2X + 68
-    if fence2Y - 55 < playerY < fence2Y - 50 and fence2X - 65 < playerX < fence2X + 68:
-        playerY = fence2Y - 55
-    if fence2Y + 85 < playerY < fence2Y + 90 and fence2X - 65 < playerX < fence2X + 68:
-        playerY = fence2Y + 90
-
-    if fence3X - 65 < playerX < fence3X - 60 and fence3Y -55 < playerY < fence3Y + 90:
-        playerX = fence3X - 65
-    if fence3X + 63 < playerX < fence3X + 68 and fence3Y -55 < playerY < fence3Y + 90:
-        playerX = fence3X + 68
-    if fence3Y - 55 < playerY < fence3Y - 50 and fence3X - 65 < playerX < fence3X + 68:
-        playerY = fence3Y - 55
-    if fence3Y + 85 < playerY < fence3Y + 90 and fence3X - 65 < playerX < fence3X + 68:
-        playerY = fence3Y + 90
-
-
     player(playerX, playerY)
-    fence1(fence1X, fence1Y)
-    fence1(fence2X, fence2Y)
-    fence1(fence3X, fence3Y)
+    sunflower1(sunflower1X, sunflower1Y)
+    sunflower1(sunflower2X, sunflower2Y)
+    sunflower1(sunflower3X, sunflower3Y)
+    sunflower1(sunflower4X, sunflower4Y)
+    sunflower1(sunflower5X, sunflower5Y)
+    sunflower1(sunflower6X, sunflower6Y)
     pygame.display.update()
